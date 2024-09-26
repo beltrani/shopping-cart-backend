@@ -29,13 +29,18 @@ func AddProductToCart(userID string, product models.Product) (models.Cart, error
     for i, item := range cart.Items {
         if item.Product.ID == product.ID {
             cart.Items[i].Quantity++
+            cart.Items[i].Subtotal = cart.Items[i].Quantity * product.Price // Update subtotal
             found = true
             break
         }
     }
 
     if !found {
-        cart.Items = append(cart.Items, models.CartItem{Product: product, Quantity: 1})
+        cart.Items = append(cart.Items, models.CartItem{
+            Product:  product,
+            Quantity: 1,
+            Subtotal: product.Price, // Subtotal when adding the product for the first time
+        })
     }
 
     cart.TotalItems++
@@ -96,6 +101,7 @@ func UpdateProductQuantity(userID, productID string, newQuantity int) (models.Ca
         if item.Product.ID == productID {
             priceDifference = float64(newQuantity-item.Quantity) * item.Product.Price
             cart.Items[i].Quantity = newQuantity
+            cart.Items[i].Subtotal = float64(newQuantity) * item.Product.Price // Update subtotal
             found = true
             break
         }

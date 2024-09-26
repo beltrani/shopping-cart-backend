@@ -51,6 +51,9 @@ func main() {
     r.GET("/cart/items-count", controllers.GetCartItemsCount)
     r.GET("/cart/total-price", controllers.GetCartTotalPrice)
 
+    // Shipping routes
+    r.GET("/shipping/options", controllers.GetShippingOptions)
+
     // Run server
     r.Run(":8080")
 }

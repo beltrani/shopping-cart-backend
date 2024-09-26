@@ -7,10 +7,11 @@ type Product struct {
     Price float64 `json:"price" bson:"price"`
 }
 
-// CartItem structure represents a product item in the cart
+// CartItem structure represents a product item in the cart, with a calculated subtotal
 type CartItem struct {
     Product   Product `json:"product" bson:"product"`
     Quantity  int     `json:"quantity" bson:"quantity"`
+    Subtotal  float64 `json:"subtotal" bson:"subtotal"` // Subtotal for this item (price * quantity)
 }
 
 // Cart structure represents a shopping cart
